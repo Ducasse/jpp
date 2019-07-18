@@ -29,7 +29,11 @@ JPCommandLineHandler >> activate [
 
 { #category : #accessing }
 JPCommandLineHandler >> baseDirectory [
-	^ self optionAt: 'base-directory' ifAbsent: [ FileLocator workingDirectory ]
+	| baseDir |
+	baseDir := self optionAt: 'base-directory' ifAbsent: [ ^ FileLocator workingDirectory ].
+	^ (baseDir first = $/)
+		ifTrue: [ baseDir asFileReference ]
+		ifFalse: [ FileLocator workingDirectory / baseDir ]
 ]
 
 { #category : #accessing }
