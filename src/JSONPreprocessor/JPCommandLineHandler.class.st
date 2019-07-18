@@ -12,12 +12,17 @@ JPCommandLineHandler class >> commandName [
 { #category : #activation }
 JPCommandLineHandler >> activate [
 	| stdinString |
-	stdinString := (ZnCharacterReadStream
-		on: Stdio stdin
-		encoding: 'utf8') upToEnd.
+	stdinString := self stdin upToEnd.
 	self stdout nextPutAll: stdinString.
 	self stdout
-		nextPutAll: (JSONPreprocessor new
-							baseDirectory: FileLocator workingDirectory;
-							preprocessString: stdinString)
+		nextPutAll:
+			(JSONPreprocessor new
+				baseDirectory: FileLocator workingDirectory;
+				preprocessString: stdinString).
+	self exitSuccess
+]
+
+{ #category : #activation }
+JPCommandLineHandler >> stdin [
+	^ ZnCharacterReadStream on: Stdio stdin encoding: 'utf8'
 ]
