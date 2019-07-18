@@ -19,7 +19,7 @@ JPCommandLineHandler >> activate [
 					preprocessString: self inputString).
 		self exitSuccess ] on: Error do: [ :error |
 			self stderr
-				nextPutAll: ('Error: {1}' format: { error messageText }).
+				nextPutAll: ('Error: {1}' format: { error description }).
 			self exitFailure ].
 	] ensure: [
 		self inputStream close.
@@ -30,15 +30,25 @@ JPCommandLineHandler >> activate [
 { #category : #accessing }
 JPCommandLineHandler >> baseDirectory [
 	| baseDir |
-	baseDir := self optionAt: 'base-directory' ifAbsent: [ ^ FileLocator workingDirectory ].
-	^ (baseDir first = $/)
-		ifTrue: [ baseDir asFileReference ]
-		ifFalse: [ FileLocator workingDirectory / baseDir ]
+	baseDir := self
+		optionAt: 'base-directory'
+		ifAbsent: [ ^ FileLocator workingDirectory ].
+	^ self convertPathStringToFileReference: baseDir
+]
+
+{ #category : #private }
+JPCommandLineHandler >> convertPathStringToFileReference: pathString [
+	^ pathString first = $/
+		ifTrue: [ pathString asFileReference ]
+		ifFalse: [ FileLocator workingDirectory / pathString ]
 ]
 
 { #category : #accessing }
 JPCommandLineHandler >> inputStream [
-	^ self stdin
+	(self arguments size < 1 or: [ (self argumentAt: 1) = self stdinoutPathStringConvention ])
+		ifTrue: [ ^ self stdin ].
+	
+	^ self convertPathStringToFileReference: (self argumentAt: 1)
 ]
 
 { #category : #accessing }
@@ -48,10 +58,18 @@ JPCommandLineHandler >> inputString [
 
 { #category : #accessing }
 JPCommandLineHandler >> outputStream [
-	^ self stdout
+	(self arguments size < 2 or: [ (self argumentAt: 2) = self stdinoutPathStringConvention ])
+		ifTrue: [ ^ self stdout ].
+		
+	^ self convertPathStringToFileReference: (self argumentAt: 2)
 ]
 
 { #category : #accessing }
 JPCommandLineHandler >> stdin [
 	^ ZnCharacterReadStream on: Stdio stdin encoding: 'utf8'
+]
+
+{ #category : #accessing }
+JPCommandLineHandler >> stdinoutPathStringConvention [
+	^ '-'
 ]
