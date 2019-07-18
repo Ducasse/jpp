@@ -16,9 +16,14 @@ JPCommandLineHandler >> activate [
 	self stdout
 		nextPutAll:
 			(JSONPreprocessor new
-				baseDirectory: FileLocator workingDirectory;
+				baseDirectory: self baseDirectory;
 				preprocessString: stdinString).
 	self exitSuccess
+]
+
+{ #category : #accessing }
+JPCommandLineHandler >> baseDirectory [
+	^ self optionAt: 'base-directory' ifAbsent: [ FileLocator workingDirectory ]
 ]
 
 { #category : #activation }
