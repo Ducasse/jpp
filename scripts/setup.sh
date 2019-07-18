@@ -37,7 +37,7 @@ rm -f pharo-ui
 rm -f pharo
 
 # Download jpp script
-wget "JPP_SCRIPT_URL"
+wget "$JPP_SCRIPT_URL"
 
 # Go back to original directory.
 cd ..
