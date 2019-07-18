@@ -48,7 +48,7 @@ JPCommandLineHandler >> inputStream [
 	(self arguments size < 1 or: [ (self argumentAt: 1) = self stdinoutPathStringConvention ])
 		ifTrue: [ ^ self stdin ].
 	
-	^ self convertPathStringToFileReference: (self argumentAt: 1)
+	^ (self convertPathStringToFileReference: (self argumentAt: 1)) readStream
 ]
 
 { #category : #accessing }
@@ -61,7 +61,7 @@ JPCommandLineHandler >> outputStream [
 	(self arguments size < 2 or: [ (self argumentAt: 2) = self stdinoutPathStringConvention ])
 		ifTrue: [ ^ self stdout ].
 		
-	^ self convertPathStringToFileReference: (self argumentAt: 2)
+	^ (self convertPathStringToFileReference: (self argumentAt: 2)) readStream
 ]
 
 { #category : #accessing }
