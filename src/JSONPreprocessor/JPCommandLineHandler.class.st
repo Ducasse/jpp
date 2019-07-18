@@ -13,7 +13,6 @@ JPCommandLineHandler class >> commandName [
 JPCommandLineHandler >> activate [
 	| stdinString |
 	stdinString := self stdin upToEnd.
-	self stdout nextPutAll: stdinString.
 	self stdout
 		nextPutAll:
 			(JSONPreprocessor new
