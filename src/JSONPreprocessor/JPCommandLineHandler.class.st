@@ -11,14 +11,20 @@ JPCommandLineHandler class >> commandName [
 
 { #category : #activation }
 JPCommandLineHandler >> activate [
-	| stdinString |
-	stdinString := self stdin upToEnd.
-	self stdout
-		nextPutAll:
-			(JSONPreprocessor new
-				baseDirectory: self baseDirectory;
-				preprocessString: stdinString).
-	self exitSuccess
+	[
+		[ self outputStream
+			nextPutAll:
+				(JSONPreprocessor new
+					baseDirectory: self baseDirectory;
+					preprocessString: self inputString).
+		self exitSuccess ] on: Error do: [ :error |
+			self stderr
+				nextPutAll: ('Error: {1}' format: { error messageText }).
+			self exitFailure ].
+	] ensure: [
+		self inputStream close.
+		self outputStream close.
+	].
 ]
 
 { #category : #accessing }
@@ -26,7 +32,22 @@ JPCommandLineHandler >> baseDirectory [
 	^ self optionAt: 'base-directory' ifAbsent: [ FileLocator workingDirectory ]
 ]
 
-{ #category : #activation }
+{ #category : #accessing }
+JPCommandLineHandler >> inputStream [
+	^ self stdin
+]
+
+{ #category : #accessing }
+JPCommandLineHandler >> inputString [
+	^ self inputStream upToEnd
+]
+
+{ #category : #accessing }
+JPCommandLineHandler >> outputStream [
+	^ self stdout
+]
+
+{ #category : #accessing }
 JPCommandLineHandler >> stdin [
 	^ ZnCharacterReadStream on: Stdio stdin encoding: 'utf8'
 ]
