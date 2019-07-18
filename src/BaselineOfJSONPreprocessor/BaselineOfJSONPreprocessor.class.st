@@ -7,7 +7,6 @@ Class {
 { #category : #baselines }
 BaselineOfJSONPreprocessor >> baseline: spec [
 	<baseline>
-	<baseline>
 	spec
 		for: #common
 			do: [
