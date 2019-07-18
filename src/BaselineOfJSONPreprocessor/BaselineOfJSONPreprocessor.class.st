@@ -10,8 +10,11 @@ BaselineOfJSONPreprocessor >> baseline: spec [
 	spec
 		for: #common
 			do: [
+				"Dependencies"
+				spec baseline: 'BBCode' with: [ 
+					spec repository: 'github://juliendelplanque/BBCode/src' ].
 				"Packages"
 				spec
-					package: 'JSONPreprocessor';
+					package: 'JSONPreprocessor' with: [ spec requires: #('BBCode') ];
 					package: 'JSONPreprocessor-Tests' with: [ spec requires: #('JSONPreprocessor') ] ]
 ]
