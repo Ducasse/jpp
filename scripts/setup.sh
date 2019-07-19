@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
+# Image and VM
+IMAGE_VERSION="70-minimal"
+VM_VERSION="vm70"
 # URLs
-IMAGE_URL="https://get.pharo.org/70-minimal"
-VM_URL="https://get.pharo.org/vm70"
+IMAGE_URL="https://get.pharo.org/$IMAGE_VERSION"
+VM_URL="https://get.pharo.org/$VM_VERSION"
 SOURCES_URL="http://files.pharo.org/sources/PharoV60.sources"
 TONEL_URL="github://pharo-vcs/tonel"
 JPP_REPOSITORY_URL="github://juliendelplanque/jpp/src"
