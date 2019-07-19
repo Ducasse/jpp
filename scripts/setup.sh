@@ -27,7 +27,7 @@ wget "$SOURCES_URL"
 # Install Tonel (required because jpp is in Tonel format).
 eval "$METACELLO_CMD install $TONEL_URL $TONEL_BASELINE" --groups=core
 # Install jpp.
-eval "$METACELLO_CMD install $JPP_REPOSITORY_URL $JPP_BASELINE"
+eval "$METACELLO_CMD install $JPP_REPOSITORY_URL $JPP_BASELINE" --groups=core
 
 # Clean garbage.
 rm -rf github-cache
