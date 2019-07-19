@@ -30,14 +30,17 @@ JSONPreprocessor >> bbCodeExporterClass: anObject [
 
 { #category : #'pre-process' }
 JSONPreprocessor >> preprocess: aJSONObject [
-	| withFilesRead |
+	| withFilesRead withStringPreprocessed |
 	withFilesRead := JPFileReader new
 							preprocessor: self;
 							baseDirectory: self baseDirectory;
 							visit: aJSONObject.
-	^ JPStringConverter new
+	withStringPreprocessed := JPStringConverter new
+										preprocessor: self;
+										visit: withFilesRead.
+	^ JPListMetadataAdder new
 		preprocessor: self;
-		visit: withFilesRead
+		visit: withStringPreprocessed
 ]
 
 { #category : #'pre-process' }
