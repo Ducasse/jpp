@@ -63,7 +63,7 @@ JPCommandLineHandler >> outputStream [
 		or: [ (self positionalArgumentAt: 2) = self stdinoutPathStringConvention ])
 			ifTrue: [ ^ self stdout ].
 		
-	^ (self convertPathStringToFileReference: (self positionalArgumentAt: 2)) readStream
+	^ (self convertPathStringToFileReference: (self positionalArgumentAt: 2)) writeStream
 ]
 
 { #category : #accessing }
