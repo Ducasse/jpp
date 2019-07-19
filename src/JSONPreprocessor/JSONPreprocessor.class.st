@@ -2,7 +2,8 @@ Class {
 	#name : #JSONPreprocessor,
 	#superclass : #Object,
 	#instVars : [
-		'baseDirectory'
+		'baseDirectory',
+		'bbCodeExporterClass'
 	],
 	#category : #JSONPreprocessor
 }
@@ -15,6 +16,16 @@ JSONPreprocessor >> baseDirectory [
 { #category : #accessing }
 JSONPreprocessor >> baseDirectory: anObject [
 	baseDirectory := anObject
+]
+
+{ #category : #accessing }
+JSONPreprocessor >> bbCodeExporterClass [
+	^ bbCodeExporterClass
+]
+
+{ #category : #accessing }
+JSONPreprocessor >> bbCodeExporterClass: anObject [
+	bbCodeExporterClass := anObject
 ]
 
 { #category : #'pre-process' }

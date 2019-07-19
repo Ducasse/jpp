@@ -14,7 +14,7 @@ BaselineOfJSONPreprocessor >> baseline: spec [
 				spec baseline: 'BBCode' with: [ 
 					spec
 						repository: 'github://juliendelplanque/BBCode/src';
-						loads: #('html') ].
+						loads: #('html' 'latex') ].
 				"Packages"
 				spec
 					package: 'JSONPreprocessor' with: [ spec requires: #('BBCode') ];

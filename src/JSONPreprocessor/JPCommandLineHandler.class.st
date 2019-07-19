@@ -15,6 +15,7 @@ JPCommandLineHandler >> activate [
 		[ self outputStream
 			nextPutAll:
 				(JSONPreprocessor new
+					bbCodeExporterClass: self bbCodeExporterClass;
 					baseDirectory: self baseDirectory;
 					preprocessString: self inputString).
 		self exitSuccess ] on: Error do: [ :error |
@@ -36,11 +37,28 @@ JPCommandLineHandler >> baseDirectory [
 	^ self convertPathStringToFileReference: baseDir
 ]
 
+{ #category : #accessing }
+JPCommandLineHandler >> bbCodeExporterClass [
+	| exporterName |
+	exporterName := self
+		optionAt: 'bbcode-exporter'
+		ifAbsent: [ ^ BBCHTMLExporter ].
+	^ self exporterClassForName: exporterName
+]
+
 { #category : #private }
 JPCommandLineHandler >> convertPathStringToFileReference: pathString [
 	^ pathString first = $/
 		ifTrue: [ pathString asFileReference ]
 		ifFalse: [ FileLocator workingDirectory / pathString ]
+]
+
+{ #category : #accessing }
+JPCommandLineHandler >> exporterClassForName: exporterName [
+	^ { 
+		'html' -> BBCHTMLExporter.
+		'latex' -> BBCLaTeXExporter
+	 } asDictionary at: exporterName
 ]
 
 { #category : #accessing }

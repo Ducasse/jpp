@@ -13,7 +13,7 @@ JPBBCodeConverter class >> key [
 JPBBCodeConverter >> convert: aString [
 	^ String streamContents: [ :writeStream |
 	| export |
-	export := BBCHTMLExporter new
+	export := self exporterClass new
 					writeStream: writeStream.
 	[ (BBCParser new
 		parse: aString readStream) accept: export.
@@ -21,4 +21,9 @@ JPBBCodeConverter >> convert: aString [
 		error messageText = 'Not a bbcode string.'
 			ifTrue: [ ^ aString ].
 		self error: ('Malformated BBCode: "{1}"' format: { aString }) ] ]
+]
+
+{ #category : #accessing }
+JPBBCodeConverter >> exporterClass [
+	^ self preprocessor bbCodeExporterClass
 ]
