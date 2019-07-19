@@ -16,5 +16,9 @@ BaselineOfJSONPreprocessor >> baseline: spec [
 				"Packages"
 				spec
 					package: 'JSONPreprocessor' with: [ spec requires: #('BBCode') ];
-					package: 'JSONPreprocessor-Tests' with: [ spec requires: #('JSONPreprocessor') ] ]
+					package: 'JSONPreprocessor-Tests' with: [ spec requires: #('JSONPreprocessor') ].
+				"Groups"
+				spec
+					group: 'core' with: #('JSONPreprocessor');
+					group: 'test' with: #('JSONPreprocessor-Tests') ]
 ]
