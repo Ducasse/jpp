@@ -45,10 +45,11 @@ JPCommandLineHandler >> convertPathStringToFileReference: pathString [
 
 { #category : #accessing }
 JPCommandLineHandler >> inputStream [
-	(self arguments size < 1 or: [ (self argumentAt: 1) = self stdinoutPathStringConvention ])
-		ifTrue: [ ^ self stdin ].
+	(self positionalArguments size < 1 or: [ 
+		(self positionalArgumentAt: 1) = self stdinoutPathStringConvention ])
+			ifTrue: [ ^ self stdin ].
 	
-	^ (self convertPathStringToFileReference: (self argumentAt: 1)) readStream
+	^ (self convertPathStringToFileReference: (self positionalArgumentAt: 1)) readStream
 ]
 
 { #category : #accessing }
@@ -58,10 +59,23 @@ JPCommandLineHandler >> inputString [
 
 { #category : #accessing }
 JPCommandLineHandler >> outputStream [
-	(self arguments size < 2 or: [ (self argumentAt: 2) = self stdinoutPathStringConvention ])
-		ifTrue: [ ^ self stdout ].
+	(self positionalArguments size < 2
+		or: [ (self positionalArgumentAt: 2) = self stdinoutPathStringConvention ])
+			ifTrue: [ ^ self stdout ].
 		
-	^ (self convertPathStringToFileReference: (self argumentAt: 2)) readStream
+	^ (self convertPathStringToFileReference: (self positionalArgumentAt: 2)) readStream
+]
+
+{ #category : #accessing }
+JPCommandLineHandler >> positionalArgumentAt: anIndex [
+	^ self positionalArguments at: anIndex
+]
+
+{ #category : #accessing }
+JPCommandLineHandler >> positionalArguments [
+	^ self arguments reject: [ :arg |
+		((arg beginsWith: '--') and: [ arg size > 2 ]) or: [ 
+			(arg beginsWith: '-') and: [ arg size > 1 ] ] ]
 ]
 
 { #category : #accessing }
