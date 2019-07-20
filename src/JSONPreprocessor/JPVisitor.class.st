@@ -28,6 +28,11 @@ JPVisitor >> visitArray: aArray [
 ]
 
 { #category : #visiting }
+JPVisitor >> visitBoolean: aBoolean [
+	^ aBoolean copy
+]
+
+{ #category : #visiting }
 JPVisitor >> visitDictionary: aDictionary [
 	^ aDictionary collect: [ :object | self visit: object ]
 ]
