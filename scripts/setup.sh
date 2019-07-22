@@ -45,3 +45,10 @@ chmod u+x "jpp"
 
 # Go back to original directory.
 cd ..
+
+# Help user to set-up.
+echo "Installation is complete, to make jpp available from everywhere, add it to the PATH."
+echo 'If you run this script in $HOME directory, add the following EXPORT commands in your .bashrc/.zshrc:'
+echo '# JPP'
+echo 'export JPP_HOME="$HOME/jpp"'
+echo 'export PATH="$PATH:$JPP_HOME"'
