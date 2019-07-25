@@ -66,8 +66,8 @@ JPCommandLineHandler >> exporterClassForName: exporterName [
 
 { #category : #testing }
 JPCommandLineHandler >> hasInputFile [
-	^ (self positionalArguments size < 1 or: [ 
-			(self positionalArgumentAt: 1) = self stdinoutPathStringConvention ])
+	^ (self positionalArguments size >= 1 and: [ 
+		(self positionalArgumentAt: 1) ~= self stdinoutPathStringConvention ])
 ]
 
 { #category : #accessing }
