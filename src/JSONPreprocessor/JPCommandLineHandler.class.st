@@ -33,7 +33,10 @@ JPCommandLineHandler >> baseDirectory [
 	| baseDir |
 	baseDir := self
 		optionAt: 'base-directory'
-		ifAbsent: [ ^ FileLocator workingDirectory ].
+		ifAbsent: [ 
+			^ self hasInputFile
+				ifTrue: [ self inputFileReference parent ]
+				ifFalse: [ FileLocator workingDirectory ] ].
 	^ self convertPathStringToFileReference: baseDir
 ]
 
@@ -61,13 +64,23 @@ JPCommandLineHandler >> exporterClassForName: exporterName [
 	 } asDictionary at: exporterName
 ]
 
+{ #category : #testing }
+JPCommandLineHandler >> hasInputFile [
+	^ (self positionalArguments size < 1 or: [ 
+			(self positionalArgumentAt: 1) = self stdinoutPathStringConvention ])
+]
+
+{ #category : #accessing }
+JPCommandLineHandler >> inputFileReference [
+	^ self convertPathStringToFileReference: (self positionalArgumentAt: 1)
+]
+
 { #category : #accessing }
 JPCommandLineHandler >> inputStream [
-	(self positionalArguments size < 1 or: [ 
-		(self positionalArgumentAt: 1) = self stdinoutPathStringConvention ])
-			ifTrue: [ ^ self stdin ].
+	self hasInputFile
+		ifTrue: [ ^ self stdin ].
 	
-	^ (self convertPathStringToFileReference: (self positionalArgumentAt: 1)) readStream
+	^ self inputFileReference readStream
 ]
 
 { #category : #accessing }
