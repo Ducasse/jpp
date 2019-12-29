@@ -78,7 +78,7 @@ JPCommandLineHandler >> inputFileReference [
 { #category : #accessing }
 JPCommandLineHandler >> inputStream [
 	self hasInputFile
-		ifTrue: [ ^ self stdin ].
+		ifFalse: [ ^ self stdin ].
 	
 	^ self inputFileReference readStream
 ]
