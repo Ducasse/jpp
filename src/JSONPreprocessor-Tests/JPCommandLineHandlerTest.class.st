@@ -27,3 +27,24 @@ JPCommandLineHandlerTest >> testHasInputFile3 [
 	handler := JPCommandLineHandler commandLine: (CommandLineArguments withArguments: #('--bbcode-exporter=html' '--base-directory=data -')).
 	self deny: handler hasInputFile
 ]
+
+{ #category : #test }
+JPCommandLineHandlerTest >> testHasOutputFile [
+	| handler |
+	handler := JPCommandLineHandler commandLine: (CommandLineArguments withArguments: #('--bbcode-exporter=html' '--base-directory=data' '/foo/bar/data.json' '/foo/bar/output.json')).
+	self assert: handler hasOutputFile
+]
+
+{ #category : #test }
+JPCommandLineHandlerTest >> testHasOutputFile2 [
+	| handler |
+	handler := JPCommandLineHandler commandLine: (CommandLineArguments withArguments: #('--bbcode-exporter=html' '--base-directory=data' '/foo/bar/data.json' '-')).
+	self deny: handler hasOutputFile
+]
+
+{ #category : #test }
+JPCommandLineHandlerTest >> testHasOutputFile3 [
+	| handler |
+	handler := JPCommandLineHandler commandLine: (CommandLineArguments withArguments: #('--bbcode-exporter=html' '--base-directory=data' '/foo/bar/data.json')).
+	self deny: handler hasOutputFile
+]
