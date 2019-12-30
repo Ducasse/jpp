@@ -11,6 +11,7 @@ JPListMetadataAdder >> visitArray: anArray [
 	newArray doWithIndex: [ :object :index |
 		(object class = Dictionary)
 			ifTrue: [ 
+				object at: '_first?' put: (index = 1).
 				object at: '_last?' put: (index = newArray size).
 				object at: '_index' put: index ] ].
 	^ newArray
