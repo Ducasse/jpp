@@ -1,8 +1,18 @@
 Class {
 	#name : #JPBBCodeConverter,
 	#superclass : #JPConverter,
+	#instVars : [
+		'exporterClass'
+	],
 	#category : #JSONPreprocessor
 }
+
+{ #category : #'instance creation' }
+JPBBCodeConverter class >> exporterClass: exporterClass [
+	^ self new
+		exporterClass: exporterClass;
+		yourself
+]
 
 { #category : #accessing }
 JPBBCodeConverter class >> key [
@@ -25,5 +35,10 @@ JPBBCodeConverter >> convert: aString [
 
 { #category : #accessing }
 JPBBCodeConverter >> exporterClass [
-	^ self preprocessor bbCodeExporterClass
+	^ exporterClass
+]
+
+{ #category : #accessing }
+JPBBCodeConverter >> exporterClass: anObject [
+	exporterClass := anObject
 ]

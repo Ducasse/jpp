@@ -3,10 +3,16 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'baseDirectory',
-		'bbCodeExporterClass'
+		'visitors'
 	],
 	#category : #JSONPreprocessor
 }
+
+{ #category : #adding }
+JSONPreprocessor >> addVisitor: aVisitor [
+	aVisitor preprocessor: self.
+	self visitors add: aVisitor
+]
 
 { #category : #accessing }
 JSONPreprocessor >> baseDirectory [
@@ -18,32 +24,42 @@ JSONPreprocessor >> baseDirectory: anObject [
 	baseDirectory := anObject
 ]
 
-{ #category : #accessing }
-JSONPreprocessor >> bbCodeExporterClass [
-	^ bbCodeExporterClass
-]
-
-{ #category : #accessing }
-JSONPreprocessor >> bbCodeExporterClass: anObject [
-	bbCodeExporterClass := anObject
+{ #category : #initialization }
+JSONPreprocessor >> initialize [
+	super initialize.
+	"self visitors: {
+		JPFileReader new
+			preprocessor: self;
+			baseDirectory: self baseDirectory;
+			yourself.
+		JPStringConverter new
+			preprocessor: self;
+			yourself.
+		JPListMetadataAdder new
+			preprocessor: self;
+			yourself }."
+	self visitors: OrderedCollection new
 ]
 
 { #category : #'pre-process' }
 JSONPreprocessor >> preprocess: aJSONObject [
-	| withFilesRead withStringPreprocessed |
-	withFilesRead := JPFileReader new
-							preprocessor: self;
-							baseDirectory: self baseDirectory;
-							visit: aJSONObject.
-	withStringPreprocessed := JPStringConverter new
-										preprocessor: self;
-										visit: withFilesRead.
-	^ JPListMetadataAdder new
-		preprocessor: self;
-		visit: withStringPreprocessed
+	^ self visitors
+		inject: aJSONObject
+		into: [ :dict :visitor |
+			visitor visit: dict ]
 ]
 
 { #category : #'pre-process' }
 JSONPreprocessor >> preprocessString: aString [
 	^ STONJSON toStringPretty: (self preprocess: (STONJSON fromString: aString))
+]
+
+{ #category : #accessing }
+JSONPreprocessor >> visitors [
+	^ visitors
+]
+
+{ #category : #accessing }
+JSONPreprocessor >> visitors: anObject [
+	visitors := anObject
 ]

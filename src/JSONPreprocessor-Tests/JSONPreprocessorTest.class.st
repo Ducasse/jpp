@@ -10,7 +10,9 @@ Class {
 { #category : #test }
 JSONPreprocessorTest >> testPreprocessStringJSONFormattedStringConverter [
 	| preprocessor |
-	preprocessor := JSONPreprocessor new.
+	preprocessor := JSONPreprocessor new
+							addVisitor: JPStringConverter new;
+							yourself.
 	self
 		assert: (preprocessor preprocess:
 			{'json_as_string' -> { '_string' -> '{"foo" : 42, "bar" : "yes"}' . '_format' -> 'json'} asDictionary} asDictionary)
@@ -20,7 +22,9 @@ JSONPreprocessorTest >> testPreprocessStringJSONFormattedStringConverter [
 { #category : #test }
 JSONPreprocessorTest >> testPreprocessStringListMetadata [
 	| preprocessor |
-	preprocessor := JSONPreprocessor new.
+	preprocessor := JSONPreprocessor new
+							addVisitor: JPListMetadataAdder new;
+							yourself.
 	self
 		assert: (preprocessor preprocess: {
 			{'name' -> 'Julien'. 'age' -> 25} asDictionary.
