@@ -2,17 +2,15 @@ Class {
 	#name : #JPFileReader,
 	#superclass : #JPVisitor,
 	#instVars : [
-		'baseDirectory',
-		'bbCodeExporterClass'
+		'baseDirectory'
 	],
 	#category : #JSONPreprocessor
 }
 
 { #category : #'instance creation' }
-JPFileReader class >> baseDirectory: baseDirectory bbCodeExporterClass: bbCodeExporterClass [
+JPFileReader class >> baseDirectory: baseDirectory [
 	^ self new
 		baseDirectory: baseDirectory;
-		bbCodeExporterClass: bbCodeExporterClass;
 		yourself
 ]
 
@@ -24,16 +22,6 @@ JPFileReader >> baseDirectory [
 { #category : #accessing }
 JPFileReader >> baseDirectory: anObject [
 	baseDirectory := anObject
-]
-
-{ #category : #accessing }
-JPFileReader >> bbCodeExporterClass [
-	^ bbCodeExporterClass
-]
-
-{ #category : #accessing }
-JPFileReader >> bbCodeExporterClass: anObject [
-	bbCodeExporterClass := anObject
 ]
 
 { #category : #accessing }

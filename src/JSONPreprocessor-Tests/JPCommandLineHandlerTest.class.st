@@ -4,8 +4,26 @@ A JPCommandLineHandlerTest is a test class for testing the behavior of JPCommand
 Class {
 	#name : #JPCommandLineHandlerTest,
 	#superclass : #TestCase,
+	#instVars : [
+		'inputFile',
+		'outputFile'
+	],
 	#category : #'JSONPreprocessor-Tests'
 }
+
+{ #category : #running }
+JPCommandLineHandlerTest >> setUp [
+	super setUp.
+	inputFile := FileLocator workingDirectory / UUIDGenerator next asString36.
+	outputFile := FileLocator workingDirectory / UUIDGenerator next asString36.
+]
+
+{ #category : #running }
+JPCommandLineHandlerTest >> tearDown [
+	inputFile ensureDelete.
+	outputFile ensureDelete.
+	super tearDown
+]
 
 { #category : #test }
 JPCommandLineHandlerTest >> testHasInputFile [

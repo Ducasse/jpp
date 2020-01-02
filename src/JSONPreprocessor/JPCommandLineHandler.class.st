@@ -15,8 +15,8 @@ JPCommandLineHandler >> activate [
 		[ self outputStream
 			nextPutAll:
 				(JSONPreprocessor new
-					addVisitor: (JPFileReader baseDirectory: self baseDirectory bbCodeExporterClass: self bbCodeExporterClass);
-					addVisitor: JPStringConverter new;
+					addVisitor: (JPFileReader baseDirectory: self baseDirectory);
+					addVisitor: (JPStringConverter bbCodeExporterClass: self bbCodeExporterClass);
 					addVisitor: JPListMetadataAdder new;
 					preprocessString: self inputString).
 		self exitSuccess ] on: Error do: [ :error |

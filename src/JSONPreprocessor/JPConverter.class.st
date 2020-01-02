@@ -2,7 +2,7 @@ Class {
 	#name : #JPConverter,
 	#superclass : #Object,
 	#instVars : [
-		'preprocessor'
+		'stringConverter'
 	],
 	#category : #JSONPreprocessor
 }
@@ -13,9 +13,9 @@ JPConverter class >> fromKey: aString [
 ]
 
 { #category : #'instance creation' }
-JPConverter class >> fromKey: aString preprocessor: aPreprocessor [
+JPConverter class >> fromKey: aString stringConverter: stringConverter [
 	^ (self fromKey: aString)
-		preprocessor: aPreprocessor;
+		stringConverter: stringConverter;
 		yourself
 ]
 
@@ -31,11 +31,11 @@ JPConverter >> convert: aString [
 ]
 
 { #category : #accessing }
-JPConverter >> preprocessor [
-	^ preprocessor
+JPConverter >> stringConverter [
+	^ stringConverter
 ]
 
 { #category : #accessing }
-JPConverter >> preprocessor: anObject [
-	preprocessor := anObject
+JPConverter >> stringConverter: anObject [
+	stringConverter := anObject
 ]
