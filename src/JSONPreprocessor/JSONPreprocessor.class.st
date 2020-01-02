@@ -3,7 +3,9 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'baseDirectory',
-		'visitors'
+		'visitors',
+		'inputStream',
+		'outputStream'
 	],
 	#category : #JSONPreprocessor
 }
@@ -39,6 +41,33 @@ JSONPreprocessor >> initialize [
 			preprocessor: self;
 			yourself }."
 	self visitors: OrderedCollection new
+]
+
+{ #category : #accessing }
+JSONPreprocessor >> inputStream [
+	^ inputStream
+]
+
+{ #category : #accessing }
+JSONPreprocessor >> inputStream: anObject [
+	inputStream := anObject
+]
+
+{ #category : #accessing }
+JSONPreprocessor >> outputStream [
+	^ outputStream
+]
+
+{ #category : #accessing }
+JSONPreprocessor >> outputStream: anObject [
+	outputStream := anObject
+]
+
+{ #category : #'pre-process' }
+JSONPreprocessor >> preprocess [
+	STONJSON
+		put: (self preprocess: (STONJSON fromStream: self inputStream))
+		onStreamPretty: self outputStream
 ]
 
 { #category : #'pre-process' }

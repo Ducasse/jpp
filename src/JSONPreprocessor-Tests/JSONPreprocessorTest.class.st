@@ -8,6 +8,21 @@ Class {
 }
 
 { #category : #test }
+JSONPreprocessorTest >> testPreprocess [
+	| result |
+	result := String streamContents: [ :writeStream |
+		'{"_format" : "bbcode", "_string" : "[b]Bonjour[/b]"}' readStreamDo: [ :readStream |
+			JSONPreprocessor new
+				addVisitor: (JPStringConverter bbCodeExporterClass: BBCHTMLExporter);
+				inputStream: readStream;
+				outputStream: writeStream;
+				preprocess
+		] ].
+
+	self assert: result equals: '"<b>Bonjour</b>"'
+]
+
+{ #category : #test }
 JSONPreprocessorTest >> testPreprocessStringJSONFormattedStringConverter [
 	| preprocessor |
 	preprocessor := JSONPreprocessor new

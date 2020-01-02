@@ -12,13 +12,7 @@ JPCommandLineHandler class >> commandName [
 { #category : #activation }
 JPCommandLineHandler >> activate [
 	[
-		[ self outputStream
-			nextPutAll:
-				(JSONPreprocessor new
-					addVisitor: (JPFileReader baseDirectory: self baseDirectory);
-					addVisitor: (JPStringConverter bbCodeExporterClass: self bbCodeExporterClass);
-					addVisitor: JPListMetadataAdder new;
-					preprocessString: self inputString).
+		[ self buildPreprocessor preprocess.
 		self exitSuccess ] on: Error do: [ :error |
 			self stderr
 				nextPutAll: ('Error: {1}' format: { error description }).
@@ -48,6 +42,17 @@ JPCommandLineHandler >> bbCodeExporterClass [
 		optionAt: 'bbcode-exporter'
 		ifAbsent: [ ^ BBCHTMLExporter ].
 	^ self exporterClassForName: exporterName
+]
+
+{ #category : #activation }
+JPCommandLineHandler >> buildPreprocessor [
+	^ JSONPreprocessor new
+		inputStream: self inputStream;
+		outputStream: self outputStream;
+		addVisitor: (JPFileReader baseDirectory: self baseDirectory);
+		addVisitor: (JPStringConverter bbCodeExporterClass: self bbCodeExporterClass);
+		addVisitor: JPListMetadataAdder new;
+		yourself
 ]
 
 { #category : #private }
