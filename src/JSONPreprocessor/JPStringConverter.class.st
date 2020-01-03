@@ -1,6 +1,25 @@
+"
+I search for dictionaries with the keys ""_format"" and ""_string"" (only!) and convert them to a single JSON object by formatting the given _string using the _format specified.
+
+For example, 
+
+{ ""_format"" : ""json"", ""_string"" : ""{ \""foo\"" : [1, 2, 3]}"" }
+
+is converted as:
+
+{ ""foo"" : [1, 2, 3]}
+
+Another example:
+
+{ ""_format"" : ""bbcode"", ""_string"" : ""[b]Hello[/b]"" }
+
+is converted as:
+
+""<b>Hello</b>""
+"
 Class {
 	#name : #JPStringConverter,
-	#superclass : #JPVisitor,
+	#superclass : #JPJSONVisitor,
 	#instVars : [
 		'bbCodeExporterClass'
 	],

@@ -1,6 +1,11 @@
+"
+I allow one to include the content of an external file as a String in the resulting JSON object.
+
+Relative path to a file to include are resolved starting from my #baseDirectory.
+"
 Class {
 	#name : #JPFileReader,
-	#superclass : #JPVisitor,
+	#superclass : #JPJSONVisitor,
 	#instVars : [
 		'baseDirectory'
 	],
