@@ -93,12 +93,6 @@ class ConvertersRegistry(object):
     def converters(self):
         return self.registry_dict.values()
 
-# default_converters_registry = ConvertersRegistry()
-
-# def register_converter(key, converter):
-#     global default_converters_registry
-#     default_converters_registry[key] = converter
-
 class JSONVisitor(visitor.Visitor):
     def __init__(self, preprocessor, *args, **kwargs):
         super().__init__(*args, **kwargs)
