@@ -13,7 +13,7 @@ def bbcode_formater_for_html(string):
     return bbcode.render_html(string)
 
 def bbcode_formater_for_latex(string):
-    
+    #TODO
     return parser
 
 
