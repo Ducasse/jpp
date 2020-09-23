@@ -1,7 +1,12 @@
 # JSONPreprocessor
 A preprocessor for JSON formatted data.
 
-## Install
-```sh
-curl "https://raw.githubusercontent.com/juliendelplanque/jpp/master/scripts/setup.sh" | bash
+## Install dependencies locally
+```bash
+pipenv install
+```
+
+## Run tests
+```bash
+pipenv run python -m pytest
 ```
