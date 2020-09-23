@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 import json
 import bbcode
-import visitor
+import jpp.visitor as visitor
 import os
 
 class Converter(object, metaclass=ABCMeta):

@@ -1,4 +1,4 @@
-import jpp
+from jpp import jpp
 
 import pytest
 
